@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+    <groupId>com.senacor.code.fullstack</groupId>
+    <artifactId>chat-app-frontend</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Chat App Frontend</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+	<profiles>
+		<profile>
+		  <id>prod</id>
+		  <activation>
+			<activeByDefault>true</activeByDefault>
+		  </activation>
+		  <build>
+			<plugins>
+			  <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+				  <execution>
+					<id>exec-gen-sources</id>
+					<phase>generate-sources</phase>
+					<configuration>
+					  <target name="Build Angular frontend application">
+						<!-- Install node modules via npm -->
+						<exec executable="cmd" dir="${project.basedir}" failonerror="true" osfamily="windows">
+						  <arg line="/c npm install" />
+						</exec>
+						<exec executable="npm" dir="${project.basedir}" failonerror="true" osfamily="unix">
+						  <arg line="install" />
+						</exec>
+						<!-- Build frontend application -->
+						<exec executable="cmd" dir="${project.basedir}" failonerror="true" osfamily="windows">
+						  <arg line="/c ng build --prod --preserve-symlinks" />
+						</exec>
+						<exec executable="ng" dir="${project.basedir}" failonerror="true" osfamily="unix">
+						  <arg line="build --prod" />
+						</exec>
+					  </target>
+					</configuration>
+					<goals>
+					  <goal>run</goal>
+					</goals>
+				  </execution>
+				</executions>
+			  </plugin>
+			</plugins>
+		  </build>
+		</profile>
+	</profiles>
+	
+</project>

@@ -1,0 +1,191 @@
+
+# Tasks
+
+
+## Task 1 - Creation of a Spring Boot application
+
+### Theory
+ - Spring / Spring Boot basics
+
+### 1.1 - Create an empty Spring Boot application
+ - Go to https://start.spring.io or use Spring Initializr integrated into IDEA
+ - Choose Spring Boot Version 2.0.0 (SNAPSHOT)
+ - Add the following dependencies:
+	- web
+	- jpa
+	
+### 1.2 - Run the application 
+ - Run the Spring Boot application 
+ - Open http://localhost:8080/	
+	
+	
+## Task 2 - Create REST resource for channels and messages
+
+### Theory
+ - Define a Spring bean
+ - Dependency Injection
+ - REST / How to create a REST endpoint
+
+### 2.1 Channels Service
+ - Create a service	to load all existing channels.
+ - For now just return a static list.
+
+### 2.2 Messages Service
+ - Create a service	to load all existing messages for a channel.
+ - For now just return a static list.
+	
+### 2.3 Create REST endpoints
+ - Create a REST endpoint for both resources
+    - /api/v1/channels
+    - /api/v1/channels/{channel}/messages
+ - For now we only support GET 
+ - Use the services to fetch the data
+
+### 2.4 Integration test the REST endpoints	
+ - Create an integration test with Spring mock mvc.
+	
+	
+## Task 3 - Create an Angular frontend	
+
+### Theory
+ - Angular basics
+ - Angular CLI
+    - https://github.com/angular/angular-cli
+	- https://www.npmjs.com/package/@angular/cli
+	
+### 3.0 - Setup
+ - Install Angular CLI
+	
+			
+	# if old versions exist, uninstall first 
+	npm uninstall -g angular-cli
+	npm uninstall -g @angular/cli
+	# clean cache - if npm version is > 5 then use `npm cache verify` to avoid errors (or to avoid using --force) 
+	npm cache clean
+	# install latest Anular CLI	
+	npm install -g @angular/cli@latest
+
+
+### 3.1 - Create a frontend
+- Use the CLI to create a new frontend
+
+
+    ng new my-ng-fe
+    cd my-ng-fe
+    ng serve --open
+
+The '--open' option opens the browser on http://localhost:4200/
+
+### 3.2 Inspect the created files 
+ - Look into the folder "my-ng-fe" and inspect the created files
+ - Especially look at:
+    - package.json
+    - tsconfig.json
+    - src/main.ts
+    - src/index.html
+    - src/app/app.module.ts 
+    - src/app/app.component.ts
+    - src/app/app.component.html
+
+
+## Task 4 - Modify the frontend
+
+### Theory
+
+### 4.1 Add Bootstrap for styling
+
+Install bootstrap as npm dependency
+
+    npm install bootstrap@3 jquery --save
+    
+Add bootstrap files path to angular-cli.json:
+
+    "styles": [
+                 "styles.css",
+                 "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+             ],
+             "scripts": [
+                 "../node_modules/jquery/dist/jquery.min.js",
+                 "../node_modules/bootstrap/dist/js/bootstrap.min.js"
+             ]    
+
+
+### 4.? Change title
+
+### 4.? Add menu
+
+
+
+## Task 5 - Showing Messages
+
+### 5.1 A component to show messages
+
+Create a component to show chat messages
+
+	ng generate component messages
+
+Remove the logo and show the new component instead of the links
+
+	replace img tag with <app-messages></app-messages>
+	
+	
+### 5.2 Show some messages
+
+Show simple mock messages. 
+
+Create a class to represent messages.
+
+    export class ChatMessage {
+      message: string;
+    }    
+    const MESSAGES : ChatMessage[] = [
+      {message: "foo"},
+      {message: "bar"}
+    ];
+
+### 5.3 Add more attributes to a message
+
+Extend the message model and create a component to show a message.
+Use @Input to pass the message to the message component
+
+    ng generate component messages/message
+
+Extended class:
+
+    export class ChatMessage {
+      message: string;
+      sender: string;
+      created: Date;
+    }
+    const MESSAGES : ChatMessage[] = [
+      {message: "Hi Maria", sender: "Hans", created: new Date()},
+      {message: "Hi Hans", sender: "Maria", created: new Date()}
+    ];
+
+
+
+## Task 6 - Call the Service
+
+### Theory
+ - Injectables
+ - Http
+ 
+### 6.1 Create channels service
+ - Create a service class
+ - Call the REST service via http
+ - Use the service in the component
+
+ 
+    ng generate service services/channels
+
+### 6.2 Create messages service
+ - Do the same for messages
+
+
+    ng generate service services/messages
+
+
+## Task 7 - Form to enter messages
+
+
+## Task 8 - Extend messages service to write messages
