@@ -1,12 +1,12 @@
-package com.example.demorestrepo;
+package com.senacor.code.fullstack.chat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoRestRepoApplication {
+public class ChatApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoRestRepoApplication.class, args);
+		SpringApplication.run(ChatApplication.class, args);
 	}
 }
