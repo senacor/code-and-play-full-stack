@@ -171,7 +171,8 @@ Create a class to represent messages.
 ### 5.3 Add more attributes to a message
 
 Extend the message model and create a component to show a message.
-Use @Input to pass the message to the message component
+Use a Bootstrap panel (https://www.w3schools.com/bootstrap/bootstrap_panels.asp) to layout a message.
+Use @Input to pass the message to the message component.
 
     ng generate component messages/message
 
@@ -212,5 +213,37 @@ Extended class:
 
 ## Task 7 - Form to enter messages
 
+### Theory
+ - Angular Forms
 
-## Task 8 - Extend messages service to write messages
+### 7.1  Sent message component
+
+Create a component to send chat message.
+
+This component must contain a from with two input fields "sender" (email) and "message" 
+and a button to send the message.
+
+## Task 8 - Extend messages service to send messages
+
+Extend the message service to send new messages. This should be done with a POST request.
+Trigger the new service by pressing the "send"-button.
+
+## Task 9 - Extend REST endpoint for writing message
+
+### Theory
+- JPA
+- Write to Mongo DB
+ 
+## Task 10 - Read messages from DB
+
+## Task 11 - Validation 
+
+### 11.1 validation frontend
+ - validate message length and sender email
+
+### 11.2 bean validation backend
+
+### 11.3 frontend error handling 
+ -  general error handling
+    for return code >= 4xx
+ 
