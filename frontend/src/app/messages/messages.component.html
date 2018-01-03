@@ -1,0 +1,14 @@
+<app-message-form [channel]="_currentChannel" (onMessagePosted)="handlePostedMessage($event)"></app-message-form>
+
+<div class="row" *ngFor="let message of messages">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <span>{{message.sender}}</span>
+        <span class="pull-right">{{message.creationTimestamp | date:"dd.MM.yyyy hh:mm"}} Uhr</span>
+      </div>
+      <div class="panel-body">{{message.message}}</div>
+    </div>
+  </div>
+</div>
+

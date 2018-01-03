@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-xs-12 channel-selector">
+    <form class="form-inline" #channelForm="ngForm">
+      <div class="form-group">
+        <label for="channelSelector">Channel</label>
+        <select class="form-control" id="channelSelector" name="currentChannel" [(ngModel)]="currentChannel" (ngModelChange)="onChannelChanged()">
+          <option *ngFor="let channel of channels" [ngValue]="channel">{{channel.name}}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+</div>
