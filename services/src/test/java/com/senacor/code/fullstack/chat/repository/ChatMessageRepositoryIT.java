@@ -45,10 +45,46 @@ public class ChatMessageRepositoryIT {
         messageOne.setCreationTimestamp(Instant.now().minusSeconds(20));
         assertEquals(1, repository.findAll().size());
 
-        ChatMessage messageTwo = repository.save(new ChatMessage("dev", "sender@test.de", "World!"));
-        messageTwo.setCreationTimestamp(Instant.now());
+        ChatMessage messageTwo = repository.save(new ChatMessage("dev", "sender@test.de","World!"));
+                messageTwo.setCreationTimestamp(Instant.now());
+
+
         List<ChatMessage> result = repository.findAll();
-        assertEquals(asList(messageOne, messageTwo), result);
+        assertEquals(2, result.size());
+
+        assertEquals(messageOne.getChannel(), result.get(0).getChannel());
+        assertEquals(messageOne.getSender(), result.get(0).getSender());
+        assertEquals(messageOne.getMessage(), result.get(0).getMessage());
+
+        assertEquals(messageTwo.getChannel(), result.get(1).getChannel());
+        assertEquals(messageTwo.getSender(), result.get(1).getSender());
+        assertEquals(messageTwo.getMessage(), result.get(1).getMessage());
+    }
+
+    @Test
+    public void findAllByChannelOrderByCreationTimestampAsc() {
+        repository.save(new ChatMessage("c1", "s@t.d", "m1").setCreationTimestamp(Instant.now().minusSeconds(60)));
+        repository.save(new ChatMessage("c1", "s@t.d", "m2").setCreationTimestamp(Instant.now().minusSeconds(30)));
+        repository.save(new ChatMessage("c2", "s@t.d", "m3").setCreationTimestamp(Instant.now().minusSeconds(30)));
+        repository.save(new ChatMessage("c2", "s@t.d", "m4").setCreationTimestamp(Instant.now().minusSeconds(60)));
+        repository.save(new ChatMessage("c3", "s@t.d", "m5").setCreationTimestamp(Instant.now()));
+
+        List<ChatMessage> channelOne = repository.findAllByChannelOrderByCreationTimestampAsc("c1");
+        assertEquals(2, channelOne.size());
+        assertEquals("m1", channelOne.get(0).getMessage());
+        assertEquals("m2", channelOne.get(1).getMessage());
+
+        List<ChatMessage> channelTwo = repository.findAllByChannelOrderByCreationTimestampAsc("c2");
+        assertEquals(2, channelTwo.size());
+        assertEquals("m4", channelTwo.get(0).getMessage());
+        assertEquals("m3", channelTwo.get(1).getMessage());
+
+        List<ChatMessage> channelThree = repository.findAllByChannelOrderByCreationTimestampAsc("c3");
+        assertEquals(1, channelThree.size());
+        assertEquals("m5", channelThree.get(0).getMessage());
+
+        List<ChatMessage> channelFour = repository.findAllByChannelOrderByCreationTimestampAsc("c4");
+        assertEquals(0, channelFour.size());
     }
 
 }
