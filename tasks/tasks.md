@@ -27,6 +27,7 @@ It's just because there are plans to remove reflective access and the used libs 
  - Define a Spring bean
  - Dependency Injection
  - REST / How to create a REST endpoint
+    - REST verbs: http://www.restapitutorial.com/lessons/httpmethods.html
 
 ### 2.0 Checkout "chat-app" master branch 
  - Checkout "chat-app" master branch.
@@ -34,41 +35,51 @@ It's just because there are plans to remove reflective access and the used libs 
 
 ### 2.1 Channel Service
  - A channel can be represented by a class with just one property "name". We suggest to create all model classes in a subpackage called "domain".
- - Create a service	to load all existing channels. For now just return a static list.
+ - Create a service	"loadChannels" to load all existing channels. For now just return a static list.
+ - Create a service "existsChannel" to check if a channel exists.
 
 ### 2.2 Messages Service
-- A message can be represented by a class with the following properties:
-    - id - A unique id for this message
-    - channel - The communication channel this message was posted in.
-    - sender - The name of the sender of the message.
-    - message - A String that contains the message text.
-    - creationTimestamp - A timestamp to indicate message creation / sent time.
- - Create a service	to load all existing messages for a channel.
- - For now just return a static list.
+A message can be represented by a class with the following properties:
+- id (String) - A unique id for this message.
+- channel (String) - The communication channel this message was posted in.
+- sender (String) - The name of the sender of the message.
+- message (String) - A String that contains the message text.
+- creationTimestamp (Instant) - A timestamp to indicate message creation / sent time.
+
+Initialize the creationTimestamp to now in the constructor of the ChatMessage.
+
+Create a service to load all existing messages for a channel. For now just return a static list.
+
+Only return messages for exiting channels. Use the channel service to check if a channel exits and throw a "ChannelNotFoundException" for not exiting channels.
 	
 ### 2.3 Create REST endpoints
  - Create a REST endpoint for both resources
     - /api/v1/channels
     - /api/v1/channels/{channel}/messages
- - For now we only support GET 
- - Use the services to fetch the data
+ - For now we only support GET.
+ - Use the services to fetch the data.
+ - The messages endpoint should return the messages for one channel and response with 404 for all other channels.
 
 ### 2.4 Integration test the REST endpoints	
- - Create an integration test with Spring mock mvc.
-	
+Create an integration test with Spring mock mvc.
+ 
+Information about how to write test with Mock Mvc
+    - http://www.baeldung.com/integration-testing-in-spring
+    
+You need JsonPath for to do assertions about the returned JSON.
+    - https://github.com/json-path/JsonPath
 	
 ## Task 3 - Create an Angular frontend	
 
 ### Theory
- - Angular basics
- - Angular CLI
+- Angular basics
+- Angular CLI
     - https://github.com/angular/angular-cli
 	- https://www.npmjs.com/package/@angular/cli
 	
 ### 3.0 - Setup
- - Install Angular CLI
+Install Angular CLI
 	
-			
 	# if old versions exist, uninstall first 
 	npm uninstall -g angular-cli
 	npm uninstall -g @angular/cli
@@ -79,8 +90,7 @@ It's just because there are plans to remove reflective access and the used libs 
 
 
 ### 3.1 - Create a frontend
-- Use the CLI to create a new frontend
-
+Use the CLI to create a new frontend
 
     ng new my-ng-fe
     cd my-ng-fe
@@ -89,15 +99,16 @@ It's just because there are plans to remove reflective access and the used libs 
 The '--open' option opens the browser on http://localhost:4200/
 
 ### 3.2 Inspect the created files 
- - Look into the folder "my-ng-fe" and inspect the created files
- - Especially look at:
-    - package.json
-    - tsconfig.json
-    - src/main.ts
-    - src/index.html
-    - src/app/app.module.ts 
-    - src/app/app.component.ts
-    - src/app/app.component.html
+Look into the folder "my-ng-fe" and inspect the created files.
+ 
+Especially look at:
+- package.json
+- tsconfig.json
+- src/main.ts
+- src/index.html
+- src/app/app.module.ts 
+- src/app/app.component.ts
+- src/app/app.component.html
 
 
 ## Task 4 - Modify the frontend
@@ -105,7 +116,6 @@ The '--open' option opens the browser on http://localhost:4200/
 ### Theory
 
 ### 4.1 Add Bootstrap for styling
-
 Install bootstrap as npm dependency
 
     npm install bootstrap@3 jquery --save
@@ -144,7 +154,6 @@ e.g.:
 ## Task 5 - Showing Messages
 
 ### 5.1 A component to show messages
-
 Create a component to show chat messages
 
 	ng generate component messages
@@ -155,7 +164,6 @@ Remove the logo and show the new component instead of the links
 	
 	
 ### 5.2 Show some messages
-
 Show simple mock messages. 
 
 Create a class to represent messages.
@@ -169,7 +177,6 @@ Create a class to represent messages.
     ];
 
 ### 5.3 Add more attributes to a message
-
 Extend the message model and create a component to show a message.
 Use a Bootstrap panel (https://www.w3schools.com/bootstrap/bootstrap_panels.asp) to layout a message.
 Use @Input to pass the message to the message component.
@@ -197,16 +204,14 @@ Extended class:
  - Http
  
 ### 6.1 Create channels service
- - Create a service class
- - Call the REST service via http
- - Use the service in the component
+Create a service class,
+call the REST service via http 
+and use the service in the component.
 
- 
     ng generate service services/channels
 
 ### 6.2 Create messages service
- - Do the same for messages
-
+Do the same for messages
 
     ng generate service services/messages
 
@@ -228,14 +233,67 @@ and a button to send the message.
 Extend the message service to send new messages. This should be done with a POST request.
 Trigger the new service by pressing the "send"-button.
 
-## Task 9 - Extend REST endpoint for writing message
+## Task 9 - Add a database
 
 ### Theory
 - JPA
-- Write to Mongo DB
+- Read from Mongo DB
+- Spring Data
+    - https://spring.io/guides/gs/accessing-data-mongodb/
+    - https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#repositories.core-concepts
  
-## Task 10 - Read messages from DB
+### 9.1 Setup MongoDb
+Add dependencies for Spring Data and embedded Mongo DB:
 
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>de.flapdoodle.embed</groupId>
+        <artifactId>de.flapdoodle.embed.mongo</artifactId>
+    </dependency>
+ 		 
+There is a bug in the embedded Mongo DB regarding JDK 9:
+    https://github.com/flapdoodle-oss/de.flapdoodle.embed.process/pull/66
+    
+Create a class "Processes" in a package package called "de.flapdoodle.embed.process.runtime" with the following content:
+    https://raw.githubusercontent.com/tibtof/de.flapdoodle.embed.process/9ec59b9eb292c4ec9bfcdb2b003caf85df174a7a/src/main/java/de/flapdoodle/embed/process/runtime/Processes.java 
+
+Start your application an check the log for the Mongo DB startup.
+ 
+### 9.2 Spring Data Repository for ChatMessages
+Follow https://spring.io/guides/gs/accessing-data-mongodb/
+ - Annotate the ChatMessage entity to store it into the MongoDB
+ - Create a ChatMessageRepository
+ - Save some ChatMessages for channel "dev" on application startup.
+ - And write a simple test for the repository that saves and loads some ChatMessages.
+
+### 9.3 Read messages from the database
+Load messages by channel and ordered by creation time. 
+    
+    List<ChatMessage> findAllByChannelOrderByCreationTimestampAsc(String channel)
+
+Add this method to the ChatMessageRepository and use it in the ChatMessageService.
+ 
+## Task 10 - Writing of chat messages
+
+### Theory
+ - REST verbs: http://www.restapitutorial.com/lessons/httpmethods.html
+ 
+### 10.1 A service to store messages
+Extend chat message service with a create method that should take three String parameters (channel, sender, message)
+and it should return the saved ChatMessage. 
+
+Use the ChatMessage repository to save the message into the database.
+
+As in the load method throw also a "ChannelNotFoundException" if the channel does not exist.
+
+### 10.2 A POST endpoint to save new chat message
+Allow POST for the resource /channels/{channel}/messages.
+
+Hint: Use the UriComponentsBuilder to build the location URI returned by this endpoint.
+ 
 ## Task 11 - Validation 
 
 ### 11.1 validation frontend
