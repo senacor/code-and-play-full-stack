@@ -1,5 +1,8 @@
 package com.senacor.code.fullstack.chat.domain;
 
+import org.springframework.data.annotation.Id;
+
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -8,6 +11,7 @@ import java.util.Objects;
  */
 public class ChatMessage {
 
+    @Id
     private String id;
 
     private String channel;
@@ -78,7 +82,12 @@ public class ChatMessage {
                 Objects.equals(channel, that.channel) &&
                 Objects.equals(sender, that.sender) &&
                 Objects.equals(message, that.message) &&
-                Objects.equals(creationTimestamp, that.creationTimestamp);
+                // Java Instant hast nanosecond precision but Mongo DB stores timestamps as BSON Date with only millisecond precision
+                // Therefore the timestamps are not equal after saving and loading to Mongo DB.
+                // TODO: is there a nicer solution?
+                (creationTimestamp == that.creationTimestamp ||
+                        (creationTimestamp != null && that.creationTimestamp != null &&
+                                Duration.between(creationTimestamp, that.creationTimestamp).abs().compareTo(Duration.ofMillis(1)) <= 0));
     }
 
     @Override
