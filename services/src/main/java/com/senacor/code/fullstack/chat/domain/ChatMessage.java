@@ -69,8 +69,9 @@ public class ChatMessage {
         return creationTimestamp;
     }
 
-    public void setCreationTimestamp(Instant creationTimestamp) {
+    public ChatMessage setCreationTimestamp(Instant creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
+        return this;
     }
 
     @Override

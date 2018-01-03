@@ -1,13 +1,12 @@
 package com.senacor.code.fullstack.chat.service;
 
 import com.senacor.code.fullstack.chat.domain.ChatMessage;
+import com.senacor.code.fullstack.chat.repository.ChatMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
 
 /**
  * Service for managing chat messages.
@@ -17,20 +16,18 @@ public class ChatMessageService {
 
     private ChannelService channelService;
 
-    @Autowired
-    public ChatMessageService(ChannelService channelService) {
-        this.channelService = channelService;
-    }
+    private ChatMessageRepository repository;
 
-    private static final List<ChatMessage> ALL_MESSAGES = unmodifiableList(asList(
-            new ChatMessage("dev", "sender@test.de", "Hello"),
-            new ChatMessage("dev", "sender@test.de", "World!")
-    ));
+    @Autowired
+    public ChatMessageService(ChannelService channelService, ChatMessageRepository repository) {
+        this.channelService = channelService;
+        this.repository = repository;
+    }
 
     public List<ChatMessage> loadChatMessages(String channelName) throws ChannelNotFoundException {
         if (!channelService.existsChannel(channelName)) {
             throw new ChannelNotFoundException();
         }
-        return ALL_MESSAGES;
+        return repository.findAllByChannelOrderByCreationTimestampAsc(channelName);
     }
 }

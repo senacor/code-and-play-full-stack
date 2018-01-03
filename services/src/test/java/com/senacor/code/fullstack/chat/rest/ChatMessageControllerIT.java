@@ -1,5 +1,7 @@
 package com.senacor.code.fullstack.chat.rest;
 
+import com.senacor.code.fullstack.chat.domain.ChatMessage;
+import com.senacor.code.fullstack.chat.repository.ChatMessageRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +23,9 @@ public class ChatMessageControllerIT {
     private MockMvc mockMvc;
 
     @Autowired
+    private ChatMessageRepository repository;
+
+    @Autowired
     private WebApplicationContext wac;
 
     @Before
@@ -31,6 +36,9 @@ public class ChatMessageControllerIT {
     @Test
     public void loadMessages() throws Exception {
         String channel = "dev";
+        repository.save(new ChatMessage(channel, "sender@test.de", "Hello"));
+        repository.save(new ChatMessage(channel, "sender@test.de", "World!"));
+
         mockMvc.perform(get("/api/v1/{channel}/messages", channel)
                 .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andExpect(status().isOk())
