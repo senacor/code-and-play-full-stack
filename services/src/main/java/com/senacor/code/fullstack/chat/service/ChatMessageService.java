@@ -30,4 +30,11 @@ public class ChatMessageService {
         }
         return repository.findAllByChannelOrderByCreationTimestampAsc(channelName);
     }
+
+    public ChatMessage createChatMessage(String channelName, String sender, String message) throws ChannelNotFoundException {
+        if (!channelService.existsChannel(channelName)) {
+            throw new ChannelNotFoundException();
+        }
+         return repository.save(new ChatMessage(channelName, sender, message));
+    }
 }

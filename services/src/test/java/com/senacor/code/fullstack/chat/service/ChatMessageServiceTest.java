@@ -4,12 +4,14 @@ import com.senacor.code.fullstack.chat.domain.ChatMessage;
 import com.senacor.code.fullstack.chat.repository.ChatMessageRepository;
 import org.junit.Test;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 public class ChatMessageServiceTest {
 
@@ -41,4 +43,30 @@ public class ChatMessageServiceTest {
         service.loadChatMessages("not-a-channel");
     }
 
+    @Test
+    public void createChatMessage() throws ChannelNotFoundException {
+        when(channelServiceMock.existsChannel("dev")).thenReturn(true);
+        doAnswer(invocationOnMock -> {
+            ChatMessage message = invocationOnMock.getArgument(0);
+            message.setId("has-an-id");
+            return message;
+        }).when(repository).save(any());
+
+        ChatMessage savedMessage = service.createChatMessage("dev", "sender@test.de", "Hello World!");
+
+        verify(repository).save(any());
+        assertEquals("dev", savedMessage.getChannel());
+        assertEquals("sender@test.de", savedMessage.getSender());
+        assertEquals("Hello World!", savedMessage.getMessage());
+        assertEquals("has-an-id", savedMessage.getId());
+        assertTrue(Duration.between(savedMessage.getCreationTimestamp(), Instant.now()).abs().getSeconds() < 3);
+    }
+
+
+    @Test(expected = ChannelNotFoundException.class)
+    public void createChatMessagesThrowsExceptionIfChannelNotExist() throws ChannelNotFoundException {
+        when(channelServiceMock.existsChannel("not-a-channel")).thenReturn(false);
+
+        service.createChatMessage("not-a-channel", "sender@test.de", "Hello World!");
+    }
 }
