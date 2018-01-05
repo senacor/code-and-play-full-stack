@@ -241,7 +241,7 @@ Trigger the new service by pressing the "send"-button.
     - https://spring.io/guides/gs/accessing-data-mongodb/
     - https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#repositories.core-concepts
  
-### 9.1 Setup MongoDb
+### 9.1 Setup MongoDB
 Add dependencies for Spring Data and embedded Mongo DB:
 
     <dependency>
