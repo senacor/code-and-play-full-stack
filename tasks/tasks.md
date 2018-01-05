@@ -236,8 +236,7 @@ Trigger the new service by pressing the "send"-button.
 ## Task 9 - Add a database
 
 ### Theory
-- JPA
-- Read from Mongo DB
+- Mongo DB
 - Spring Data
     - https://spring.io/guides/gs/accessing-data-mongodb/
     - https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#repositories.core-concepts
@@ -253,12 +252,6 @@ Add dependencies for Spring Data and embedded Mongo DB:
         <groupId>de.flapdoodle.embed</groupId>
         <artifactId>de.flapdoodle.embed.mongo</artifactId>
     </dependency>
- 		 
-There is a bug in the embedded Mongo DB regarding JDK 9:
-    https://github.com/flapdoodle-oss/de.flapdoodle.embed.process/pull/66
-    
-Create a class "Processes" in a package package called "de.flapdoodle.embed.process.runtime" with the following content:
-    https://raw.githubusercontent.com/tibtof/de.flapdoodle.embed.process/9ec59b9eb292c4ec9bfcdb2b003caf85df174a7a/src/main/java/de/flapdoodle/embed/process/runtime/Processes.java 
 
 Start your application an check the log for the Mongo DB startup.
  
