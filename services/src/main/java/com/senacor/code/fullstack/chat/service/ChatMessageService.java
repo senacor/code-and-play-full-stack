@@ -27,7 +27,7 @@ public class ChatMessageService {
         if (!channelService.existsChannel(channelId)) {
             throw new ChannelNotFoundException();
         }
-        return messageRepository.findByChannelIdOrderByCreationTimestampAsc(channelId);
+        return messageRepository.findByChannelIdOrderByCreationTimestampDesc(channelId);
     }
 
     public ChatMessage saveChatMessage(String channelId, String sender, String message) {

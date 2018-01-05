@@ -59,7 +59,7 @@ public class ChatMessageRepositoryIT {
         repository.save(new ChatMessage("dev", "sender@test.de", "World!"));
         repository.save(new ChatMessage("general", "sender@test.de", "mongo"));
 
-        List<ChatMessage> messages = repository.findByChannelIdOrderByCreationTimestampAsc("general");
+        List<ChatMessage> messages = repository.findByChannelIdOrderByCreationTimestampDesc("general");
 
         assertEquals(3, messages.size());
     }

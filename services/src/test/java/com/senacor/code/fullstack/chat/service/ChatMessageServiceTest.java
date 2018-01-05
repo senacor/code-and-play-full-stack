@@ -27,7 +27,7 @@ public class ChatMessageServiceTest {
         List<ChatMessage> expectedList = Arrays.asList(
                 new ChatMessage("dev", "s@t.de", "Hello"),
                 new ChatMessage("dev", "s@t.de", "World!"));
-        when(messageRepositoryMock.findByChannelIdOrderByCreationTimestampAsc("dev")).thenReturn(expectedList);
+        when(messageRepositoryMock.findByChannelIdOrderByCreationTimestampDesc("dev")).thenReturn(expectedList);
 
         List<ChatMessage> result = service.loadChatMessages("dev");
 

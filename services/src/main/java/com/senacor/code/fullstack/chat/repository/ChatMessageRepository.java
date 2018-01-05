@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface ChatMessageRepository extends MongoRepository<ChatMessage, String> {
 
-    List<ChatMessage> findByChannelIdOrderByCreationTimestampAsc(String channelId);
+    List<ChatMessage> findByChannelIdOrderByCreationTimestampDesc(String channelId);
 }
