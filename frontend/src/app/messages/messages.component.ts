@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ChatMessage} from "../shared/chat-message.model";
 
 const MESSAGES : ChatMessage[] = [
-  new ChatMessage("Hello World!"),
-  new ChatMessage("This is another message.")
+  new ChatMessage("Hello World!", "sender@test.de", new Date()),
+  new ChatMessage("This is another message.", "sender@test.de", new Date())
 ];
 
 @Component({
