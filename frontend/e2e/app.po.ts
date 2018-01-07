@@ -8,4 +8,8 @@ export class AppPage {
   getParagraphText() {
     return element(by.css('app-root h1')).getText();
   }
+
+  getCurrentUser() {
+    return element(by.css('app-root div.user span')).getText();
+  }
 }

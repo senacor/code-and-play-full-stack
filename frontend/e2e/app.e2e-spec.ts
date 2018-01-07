@@ -7,8 +7,13 @@ describe('chat-app-frontend App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display a headline', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getParagraphText()).toEqual('Chat');
+  });
+
+  it('should display the current user', () => {
+    page.navigateTo();
+    expect(page.getCurrentUser()).toEqual('Hello Chatter (sender@test.de)');
   });
 });
