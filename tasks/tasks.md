@@ -98,6 +98,10 @@ Use the CLI to create a new frontend
 
 The '--open' option opens the browser on http://localhost:4200/
 
+If `ng serve` complains about that some files are "not part of the compilation", this could help:
+
+    ng serve --preserve-symlinks
+
 ### 3.2 Inspect the created files 
 Look into the folder "my-ng-fe" and inspect the created files.
  
@@ -109,11 +113,23 @@ Especially look at:
 - src/app/app.module.ts 
 - src/app/app.component.ts
 - src/app/app.component.html
+- src/app/app.component.spec.ts
 
+### 3.3 Run tests
+
+You can run the unit and e2e tests with:
+
+ ng test
+ 
+ ng e2e
+ 
 
 ## Task 4 - Modify the frontend
 
 ### Theory
+ - [Bootstrap documentation](http://getbootstrap.com/docs/3.3/css/)
+ - [Type Script Classes](https://www.typescriptlang.org/docs/handbook/classes.html)
+ - [Angular Template Syntax](https://angular.io/guide/template-syntax)
 
 ### 4.1 Add Bootstrap for styling
 Install bootstrap as npm dependency
@@ -123,7 +139,7 @@ Install bootstrap as npm dependency
 Add bootstrap files path to angular-cli.json:
 
     "styles": [
-                 "styles.css",
+			 "styles.css",
                  "../node_modules/bootstrap/dist/css/bootstrap.min.css"
              ],
              "scripts": [
@@ -131,103 +147,135 @@ Add bootstrap files path to angular-cli.json:
                  "../node_modules/bootstrap/dist/js/bootstrap.min.js"
              ]    
 
+Use Bootstrap 'container', 'row' 'col-md-2' and 'text-center' CSS classes to improve the markup of 'app.component.html'. e.g.:
 
-Bootstrap documentation > http://getbootstrap.com/docs/3.3/css/'
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center hidden-sm hidden-xs">
+			<img width="100" alt="Angular Logo" ...
+		</div>
+        <div class="col-md-4 text-center">
+			<h1>Welcome to {{ title }}!</h1>
+		</div>
+        <div class="col-md-4 text-center user">
+			<span>Hello User</span>
+		</div>
+      </div>
+    </div>
 
-Use Bootstrap 'container', 'row' 'col-md-2' and 'text-center' CSS classes to improve the markup of 'app.component.html'.
+Costume CSS can be added per component. Add the followin css class to ""
 
-e.g.:
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 text-center">...</div>
-    <div class="col-md-4 text-center">...</div>
-    <div class="col-md-4 text-center">...</div>
-  </div>
-</div>
+	.user {
+		margin-top: 25px;
+		text-align: center;
+	}
 
-### 4.? Change title
+### 4.2 Show the current user
+Change the headline "Welcome to {{ title }}!" into "Chat", or whatever you like.
 
-### 4.? Add menu
+We like to show the current user (with name and email) on the right side. For this we create a model class to represent the user.
 
+	ng generate class shared/user --type=model
+	
+Finish the created model class and replace the property title in app.component.ts with an instance of the user model and and change the html to show it.
+
+Adjust and rerun also the unit and  e2e test.
 
 
 ## Task 5 - Showing Messages
 
-### 5.1 A component to show messages
-Create a component to show chat messages
+### Theory
+ - [Angular Display Data](https://angular.io/guide/displaying-data)
+ - [Angular Pipe](https://angular.io/guide/pipes)
+ - [Angular Cheat Sheet](https://angular.io/guide/cheatsheet)
+
+### 5.1 Show some simple messages
+First create a model class ChatMessage. For now we only add a single property "message".
+
+	ng generate class shared/chat-message --type=model
+
+Create a component to show the chat messages.
 
 	ng generate component messages
 
-Remove the logo and show the new component instead of the links
+Display the new messages component in a second row and remove the h2 and the list of links.
+Define an array of ChatMessages in the message component e.g.
 
-	replace img tag with <app-messages></app-messages>
-	
-	
-### 5.2 Show some messages
-Show simple mock messages. 
-
-Create a class to represent messages.
-
-    export class ChatMessage {
-      message: string;
-    }    
     const MESSAGES : ChatMessage[] = [
-      {message: "foo"},
-      {message: "bar"}
-    ];
+	  new ChatMessage("Hello World!"),
+	  new ChatMessage("This is another message.")
+	];
 
-### 5.3 Add more attributes to a message
-Extend the message model and create a component to show a message.
-Use a Bootstrap panel (https://www.w3schools.com/bootstrap/bootstrap_panels.asp) to layout a message.
-Use @Input to pass the message to the message component.
+We will later replace this static array with by calling our REST endpoint.
 
-    ng generate component messages/message
+To layout each message you can use a [Bootstrap panel](https://www.w3schools.com/bootstrap/bootstrap_panels.asp).
 
-Extended class:
+### 5.2 Add more attributes to a message
+Extend the message model to include sender and creationTimestamp and extend the mock data, e.g.
 
-    export class ChatMessage {
-      message: string;
-      sender: string;
-      created: Date;
-    }
     const MESSAGES : ChatMessage[] = [
-      {message: "Hi Maria", sender: "Hans", created: new Date()},
-      {message: "Hi Hans", sender: "Maria", created: new Date()}
-    ];
+	  new ChatMessage("Hello World!", "sender@test.de", new Date()),
+	  new ChatMessage("This is another message.", "sender@test.de", new Date())
+	];
+
+Show the sender and the creation time in the header of the Bootstrap panel.
+
+You can use a [Angular pipe](https://angular.io/guide/pipes) to format the date object.
 
 
+## Task 6 - Form to enter messages
 
-## Task 6 - Call the Service
+### Theory
+ - [Angular template-driven Forms](https://angular.io/guide/forms)
+ - [Angular Component Interaction](https://angular.io/guide/component-interaction)
+  
+### 6.1 Select a channel
+Let's create the UI to select the current communication channel.
+
+For this we extend our data model with a channel class that hat one property "name" for the channel's name.
+
+	ng generate class shared/channel --type=model
+	
+And create a component for the ui.
+
+	ng generate component channel-selector
+
+Define a static array of channels and use a form select input field to enable the user to pick a channel.
+
+Use `(ngModelChange)="onChannelSelected()"` at the `select` element to get notified when the user selected a new channel.
+	
+###	6.2 Component Interaction
+We need the selected channel to load the messages. Therefore we need to pass the selected channel from the channel selector component to the messages component.
+
+We do this via the parent by using the @Input and @Output decorations as described in [Angular Component Interaction](https://angular.io/guide/component-interaction).
+	
+### 6.3 Message form
+
+Create a component to send chat message.
+
+This component must contain a from with two input fields "sender" (email) and "message" and a button to send the message.
+
+
+## Task 7 - Call the Service
 
 ### Theory
  - Injectables
  - Http
  
-### 6.1 Create channels service
+### 7.1 Create channels service
 Create a service class,
 call the REST service via http 
 and use the service in the component.
 
     ng generate service services/channels
 
-### 6.2 Create messages service
+### 7.2 Create messages service
 Do the same for messages
 
     ng generate service services/messages
 
-
-## Task 7 - Form to enter messages
-
-### Theory
- - Angular Forms
-
-### 7.1  Sent message component
-
-Create a component to send chat message.
-
-This component must contain a from with two input fields "sender" (email) and "message" 
-and a button to send the message.
-
+	
+	
 ## Task 8 - Extend messages service to send messages
 
 Extend the message service to send new messages. This should be done with a POST request.
