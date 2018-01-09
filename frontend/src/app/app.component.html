@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <app-channel-selector></app-channel-selector>
+  <app-channel-selector (onChannelSelected)="onChannelSelected($event)"></app-channel-selector>
 
-  <app-messages></app-messages>
+  <app-messages [currentChannel]="currentChannel"></app-messages>
 </div>

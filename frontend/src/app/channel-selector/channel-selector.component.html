@@ -3,7 +3,7 @@
     <form class="form-inline" #channelForm="ngForm">
       <div class="form-group">
         <label for="channelSelector">Channel</label>
-        <select class="form-control" id="channelSelector" name="currentChannel" [(ngModel)]="currentChannel" (ngModelChange)="onChannelSelected()">
+        <select class="form-control" id="channelSelector" name="currentChannel" [(ngModel)]="currentChannel" (ngModelChange)="onChannelChanged()">
           <option *ngFor="let channel of channels" [value]="channel.name">{{channel.name}}</option>
         </select>
       </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Channel} from "../shared/channel.model";
 
 const CHANNELS : Channel[] = [
@@ -17,6 +17,8 @@ export class ChannelSelectorComponent implements OnInit {
   currentChannel: string;
   channels: Channel[] = [];
 
+  @Output() onChannelSelected = new EventEmitter<Channel>();
+
   constructor() { }
 
   ngOnInit() {
@@ -26,8 +28,8 @@ export class ChannelSelectorComponent implements OnInit {
     });
   }
 
-  public onChannelSelected() {
-    alert(this.currentChannel);
+  public onChannelChanged() {
+    this.onChannelSelected.emit(new Channel(this.currentChannel));
   }
 
   private fetchChannels(): Promise<Channel[]> {
@@ -37,6 +39,7 @@ export class ChannelSelectorComponent implements OnInit {
   private initCurrentChannel() {
     if (this.currentChannel === undefined && this.channels.length > 0) {
       this.currentChannel = this.channels[0].name;
+      this.onChannelChanged();
     }
   }
 
