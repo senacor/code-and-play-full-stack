@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ChatMessage} from "../shared/chat-message.model";
+import {Channel} from "../shared/channel.model";
 
 const MESSAGES : ChatMessage[] = [
   new ChatMessage("Hello World!", "sender@test.de", new Date()),
@@ -13,11 +14,19 @@ const MESSAGES : ChatMessage[] = [
 })
 export class MessagesComponent implements OnInit {
 
+  _currentChannel: Channel;
+
   messages: ChatMessage[] = [];
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  @Input()
+  set currentChannel(currentChannel: Channel) {
+    this._currentChannel = currentChannel;
+    // load messages for the current channel
+    this.messages = [];
     this.fetchChatMessages().then(messages => this.messages = messages);
   }
 
