@@ -30,6 +30,10 @@ export class MessagesComponent implements OnInit {
     this.fetchChatMessages().then(messages => this.messages = messages);
   }
 
+  handlePostedMessage(message: ChatMessage) {
+    this.messages.unshift(message);
+  }
+
   private fetchChatMessages(): Promise<ChatMessage[]> {
     return Promise.resolve(MESSAGES.slice(0)); // TODO: get message data from the server;
   }
