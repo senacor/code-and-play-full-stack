@@ -94,13 +94,16 @@ Use the CLI to create a new frontend
 
     ng new my-ng-fe
     cd my-ng-fe
-    ng serve --open
+    ng serve --proxy proxy.conf.js --open
 
 The '--open' option opens the browser on http://localhost:4200/
 
+The '--proxy proxy.conf.js' option enables the proxy configured in the file. Our Angular application is running on a dev server with port 4200 but our Spring application with the API services is running on port 8080.
+In the proxy conf file is configured to send request for http://localhost:4200/api/* to http://localhost:8080/api/*. 
+
 If `ng serve` complains about that some files are "not part of the compilation", this could help:
 
-    ng serve --preserve-symlinks
+    ng serve --proxy proxy.conf.js --preserve-symlinks
 
 ### 3.2 Inspect the created files 
 Look into the folder "my-ng-fe" and inspect the created files.
@@ -248,19 +251,24 @@ Use `(ngModelChange)="onChannelSelected()"` at the `select` element to get notif
 We need the selected channel to load the messages. Therefore we need to pass the selected channel from the channel selector component to the messages component.
 
 We do this via the parent by using the @Input and @Output decorations as described in [Angular Component Interaction](https://angular.io/guide/component-interaction).
+
+In the messages component you can use a setter for the current channel to have a hook to do something when the channel changes.
 	
-### 6.3 Message form
+### 6.3 Form to post a message
 
-Create a component to send chat message.
+Create a component to send a chat message and add it into the message component above the messages and use @Output to pass new messages to the message list.
 
-This component must contain a from with two input fields "sender" (email) and "message" and a button to send the message.
+	ng generate component channel-form
+	
+This component must contain a from with one input field for the "message" and a button to submit the form. 
+By now we just hard code the sender of the messages.
 
 
 ## Task 7 - Call the Service
 
 ### Theory
  - Injectables
- - Http
+ - [Angular Http Client](https://angular.io/guide/http)
  
 ### 7.1 Create channels service
 Create a service class,
