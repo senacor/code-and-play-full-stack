@@ -1,7 +1,8 @@
- 
+
 module.exports = {
 	"/api/*": {
-		"target": "http://localhost:8080/api/",
-		"secure": false
+		"target": "http://localhost:8080/",
+		"secure": false,
+    "logLevel": "debug"
 	}
-}
+};
