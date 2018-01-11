@@ -1,14 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Channel} from "../shared/channel.model";
-
-const CHANNELS : Channel[] = [
-  new Channel("general"),
-  new Channel("dev"),
-  new Channel("humor")
-];
+import {ChannelsService} from "../services/channels.service";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-channel-selector',
+  providers: [ ChannelsService ],
   templateUrl: './channel-selector.component.html',
   styleUrls: ['./channel-selector.component.css']
 })
@@ -19,21 +16,18 @@ export class ChannelSelectorComponent implements OnInit {
 
   @Output() onChannelSelected = new EventEmitter<Channel>();
 
-  constructor() { }
+  constructor(private channelsService: ChannelsService) { }
 
   ngOnInit() {
-    this.fetchChannels().then(channels => {
+    this.channelsService.fetchChannels().then(channels => {
       this.channels = channels;
       this.initCurrentChannel();
-    });
+    },
+      e => console.error(e));
   }
 
-  public onChannelChanged() {
+  onChannelChanged() {
     this.onChannelSelected.emit(new Channel(this.currentChannel));
-  }
-
-  private fetchChannels(): Promise<Channel[]> {
-    return Promise.resolve(CHANNELS.slice(0)); // TODO: get channels from the server;
   }
 
   private initCurrentChannel() {
