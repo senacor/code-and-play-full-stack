@@ -1,9 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Channel} from "../shared/channel.model";
 import {ChatMessage} from "../shared/chat-message.model";
+import {MessagesService} from "../services/messages.service";
 
 @Component({
   selector: 'app-message-form',
+  providers: [ MessagesService ],
   templateUrl: './message-form.component.html',
   styleUrls: ['./message-form.component.css']
 })
@@ -15,15 +17,16 @@ export class MessageFormComponent implements OnInit {
 
   @Output() onMessagePosted = new EventEmitter<ChatMessage>();
 
-  constructor() { }
+  constructor(private messagesService: MessagesService) { }
 
   ngOnInit() { }
 
   onSubmit() {
     // TODO: get the logged in user as sender
     let sender = "sender@test.de";
-    // TODO: do a service call to post the new message to the current channel
-    this.onMessagePosted.emit(new ChatMessage(this.message, sender, new Date()));
+    let newChatMessage = new ChatMessage(this.message, sender, new Date());
+    this.messagesService.sendMessage(this.channel, newChatMessage);
+    this.onMessagePosted.emit(newChatMessage);
     this.message = "";
   }
 }
