@@ -267,27 +267,47 @@ By now we just hard code the sender of the messages.
 ## Task 7 - Call the Service
 
 ### Theory
- - Injectables
+ - [Angular Dependency Injection](https://angular.io/guide/dependency-injection)
  - [Angular Http Client](https://angular.io/guide/http)
  
-### 7.1 Create channels service
+ - [RxJS Observable](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html)
+ - [RxJS Observable map](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-map)
+ 
+### 7.1 Get channels via service call
 Create a service class,
-call the REST service via http 
-and use the service in the component.
+call the REST service via http using the Angular Http Client 
+and use the service in the channel selector component to replace the static channel array.
 
     ng generate service services/channels
+	
+Hints:  
 
-### 7.2 Create messages service
-Do the same for messages
+To cast the http call result to the expected type you can use the map operator of the RxJS Observable returned by the http.get call.
+	
+	.map(data => data as Channel[])
+	
+To use the map operator you have to import it in the service class.
+
+	import 'rxjs/add/operator/map'
+	
+An Observable can be converted into a Promis with:
+
+	observable.toPromise()
+	
+
+### 7.2 Get messages via service call
+Do the same for messages.
 
     ng generate service services/messages
 
-	
+And use the service in the messages component to replace the static message array.
+
 	
 ## Task 8 - Extend messages service to send messages
 
 Extend the message service to send new messages. This should be done with a POST request.
 Trigger the new service by pressing the "send"-button.
+
 
 ## Task 9 - Add a database
 
