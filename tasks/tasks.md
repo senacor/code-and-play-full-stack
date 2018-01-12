@@ -173,6 +173,7 @@ Costume CSS can be added per component. Add the followin css class to ""
 		text-align: center;
 	}
 
+UI Example:
 ![UI Task 4.1](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/master/tasks/task-4.1/task-4.1-ui.png)
 
 ### 4.2 Show the current user
@@ -186,6 +187,7 @@ Finish the created model class and replace the property title in app.component.t
 
 Adjust and rerun also the unit and  e2e test.
 
+UI Example:
 ![UI Task 4.2](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/master/tasks/task-4.2/task-4.2-ui.png)
 
 ## Task 5 - Showing Messages
@@ -216,6 +218,7 @@ We will later replace this static array with by calling our REST endpoint.
 
 To layout each message you can use a [Bootstrap panel](https://www.w3schools.com/bootstrap/bootstrap_panels.asp).
 
+UI Example:
 ![UI Task 5.1](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/master/tasks/task-5.1/task-5.1-ui.png)
 
 ### 5.2 Add more attributes to a message
@@ -230,6 +233,7 @@ Show the sender and the creation time in the header of the Bootstrap panel.
 
 You can use a [Angular pipe](https://angular.io/guide/pipes) to format the date object.
 
+UI Example:
 ![UI Task 5.2](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/master/tasks/task-5.2/task-5.2-ui.png)
 
 ## Task 6 - Form to enter messages
@@ -253,6 +257,7 @@ Define a static array of channels and use a form select input field to enable th
 
 Use `(ngModelChange)="onChannelSelected()"` at the `select` element to get notified when the user selected a new channel.
 	
+UI Example:
 ![UI Task 6.1](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/master/tasks/task-6.1/task-6.1.png)
 
 ###	6.2 Component Interaction
@@ -271,7 +276,6 @@ Create a component to send a chat message and add it into the message component 
 This component must contain a from with one input field for the "message" and a button to submit the form. 
 By now we just hard code the sender of the messages.
 
-![UI Task 6.3](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/master/tasks/task-6.3/task-6.3.PNG)
 
 ## Task 7 - Call the Service
 
