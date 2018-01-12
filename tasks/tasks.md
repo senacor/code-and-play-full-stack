@@ -166,7 +166,7 @@ Use Bootstrap 'container', 'row' 'col-md-2' and 'text-center' CSS classes to imp
       </div>
     </div>
 
-Costume CSS can be added per component. Add the followin css class to ""
+Costume CSS can be added per component. Add the followin css class to "app.component.css"
 
 	.user {
 		margin-top: 25px;
