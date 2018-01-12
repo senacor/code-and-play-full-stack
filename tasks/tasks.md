@@ -139,7 +139,7 @@ Install bootstrap as npm dependency
 
     npm install bootstrap@3 jquery --save
     
-Add bootstrap files path to angular-cli.json:
+Add bootstrap files path to angular-cli.json by replacing the 'styles' and 'scripts' contents by the following:
 
     "styles": [
 			 "styles.css",
