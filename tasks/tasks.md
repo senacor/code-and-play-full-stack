@@ -173,6 +173,8 @@ Costume CSS can be added per component. Add the followin css class to ""
 		text-align: center;
 	}
 
+![UI Task 4.1](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/master/tasks/task-4.1/task-4.1-ui.png)
+
 ### 4.2 Show the current user
 Change the headline "Welcome to {{ title }}!" into "Chat", or whatever you like.
 
@@ -184,6 +186,7 @@ Finish the created model class and replace the property title in app.component.t
 
 Adjust and rerun also the unit and  e2e test.
 
+![UI Task 4.2](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/master/tasks/task-4.2/task-4.2-ui.png)
 
 ## Task 5 - Showing Messages
 
@@ -213,6 +216,8 @@ We will later replace this static array with by calling our REST endpoint.
 
 To layout each message you can use a [Bootstrap panel](https://www.w3schools.com/bootstrap/bootstrap_panels.asp).
 
+![UI Task 5.1](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/master/tasks/task-5.1/task-5.1-ui.png)
+
 ### 5.2 Add more attributes to a message
 Extend the message model to include sender and creationTimestamp and extend the mock data, e.g.
 
@@ -225,6 +230,7 @@ Show the sender and the creation time in the header of the Bootstrap panel.
 
 You can use a [Angular pipe](https://angular.io/guide/pipes) to format the date object.
 
+![UI Task 5.2](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/master/tasks/task-5.2/task-5.2-ui.png)
 
 ## Task 6 - Form to enter messages
 
@@ -247,13 +253,15 @@ Define a static array of channels and use a form select input field to enable th
 
 Use `(ngModelChange)="onChannelSelected()"` at the `select` element to get notified when the user selected a new channel.
 	
+![UI Task 6.1](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/master/tasks/task-6.1/task-6.1.png)
+
 ###	6.2 Component Interaction
 We need the selected channel to load the messages. Therefore we need to pass the selected channel from the channel selector component to the messages component.
 
 We do this via the parent by using the @Input and @Output decorations as described in [Angular Component Interaction](https://angular.io/guide/component-interaction).
 
 In the messages component you can use a setter for the current channel to have a hook to do something when the channel changes.
-	
+
 ### 6.3 Form to post a message
 
 Create a component to send a chat message and add it into the message component above the messages and use @Output to pass new messages to the message list.
@@ -263,6 +271,7 @@ Create a component to send a chat message and add it into the message component 
 This component must contain a from with one input field for the "message" and a button to submit the form. 
 By now we just hard code the sender of the messages.
 
+![UI Task 6.3](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/master/tasks/task-6.3/task-6.3.PNG)
 
 ## Task 7 - Call the Service
 
