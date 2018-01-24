@@ -2,24 +2,46 @@
 # Tasks
 
 
-## Task 1 - Creation of a Spring Boot application
+## Task 1 - Clone, build and run the application
 
-### Theory
- - Spring / Spring Boot basics
+### 1.1 - Clone from github
+Clone or download the repository 'code-and-play-full-stack' from [github.com/senacor](https://github.com/senacor).
 
-### 1.1 - Create an empty Spring Boot application
- - Go to https://start.spring.io or use Spring Initializr integrated into IDEA
- - Choose Spring Boot Version 2.0.0 (SNAPSHOT)
- - Add the following dependencies:
-	- web
-	- jpa
-	
-### 1.2 - Run the application 
- - Run the Spring Boot application 
- - Open http://localhost:8080/	
-		
-INFO: When running with Java 9 the warning about "illegal reflective access operation" can be ignored.
-It's just because there are plans to remove reflective access and the used libs are not yet adapted.
+    # Use ssh
+    git clone git@github.com:senacor/code-and-play-full-stack.git
+    
+    # or http
+    git clone https://github.com/senacor/code-and-play-full-stack.git
+     
+Checkout branch 'code-camp'.
+ 
+    git checkout code-camp
+
+### 1.2 - Build and run it
+Build the application with maven.
+
+    cd services
+    mvn clean install
+
+### 1.3 - Use your IDE
+Open the project in your IDE.
+ - For IDEA: `File / Open` and select the `pom.xml` in the root of the git repository.
+ - For Eclipse: `File / Import`, choose `Existing Maven Project` and select the root folder of the git repository.
+
+Run the application directly in your IDE.
+ - Run the class `ChatApplication`.
+
+You should see now the following log enties:
+    
+    Tomcat started on port(s): 8080 (http) with context path ''
+    Started ChatApplication in 3.913 seconds (JVM running for 4.447)
+    
+Open [http://localhost:8080/](http://localhost:8080/) 
+
+TODO: image ui - without service implementation
+
+
+
 
 ## Task 2 - Create REST resource for channels and messages
 
