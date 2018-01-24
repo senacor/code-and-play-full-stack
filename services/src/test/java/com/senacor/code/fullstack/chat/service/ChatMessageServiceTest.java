@@ -11,15 +11,26 @@ import static org.mockito.Mockito.when;
 
 public class ChatMessageServiceTest {
 
-    private ChatMessageService service = new ChatMessageService();
+    private ChannelService channelServiceMock = mock(ChannelService.class);
+
+    private ChatMessageService service = new ChatMessageService(channelServiceMock);
 
     @Test
-    public void fetchChatMessages() {
+    public void fetchChatMessages() throws ChannelNotFoundException {
+        when(channelServiceMock.existsChannel("dev")).thenReturn(true);
+
         List<ChatMessage> result = service.loadChatMessages("dev");
 
         assertEquals(2, result.size());
         assertEquals("Hello", result.get(0).getMessage());
         assertEquals("World!", result.get(1).getMessage());
+    }
+
+    @Test(expected = ChannelNotFoundException.class)
+    public void loadChatMessagesThrowsExceptionIfChannelNotExist() throws ChannelNotFoundException {
+        when(channelServiceMock.existsChannel("not-a-channel")).thenReturn(false);
+
+        service.loadChatMessages("not-a-channel");
     }
 
 }

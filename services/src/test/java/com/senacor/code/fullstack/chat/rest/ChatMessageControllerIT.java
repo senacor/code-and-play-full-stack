@@ -39,4 +39,12 @@ public class ChatMessageControllerIT {
                 .andExpect(jsonPath("$[1].message").value("World!"));
     }
 
+    @Test
+    public void loadMessagesForNotExistingChannel() throws Exception {
+        String channel = "not-a-channel";
+        mockMvc.perform(get("/api/v1/{channel}/messages", channel)
+                .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isNotFound());
+    }
+
 }

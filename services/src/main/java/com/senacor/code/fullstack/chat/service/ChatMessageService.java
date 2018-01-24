@@ -20,7 +20,17 @@ public class ChatMessageService {
             new ChatMessage("dev", "sender@test.de", "World!")
     ));
 
+    private ChannelService channelService;
+
+    @Autowired
+    public ChatMessageService(ChannelService channelService) {
+        this.channelService = channelService;
+    }
+
     public List<ChatMessage> loadChatMessages(String channelId) {
+        if (!channelService.existsChannel(channelId)) {
+            throw new ChannelNotFoundException();
+        }
         return ALL_MESSAGES;
     }
 }
