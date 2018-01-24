@@ -36,11 +36,11 @@ You should see now the following log enties:
     Tomcat started on port(s): 8080 (http) with context path ''
     Started ChatApplication in 3.913 seconds (JVM running for 4.447)
     
-Open [http://localhost:8080/](http://localhost:8080/) 
+Open [http://localhost:8080/](http://localhost:8080/) to see the frontend.
+
+Call [http://localhost:8080/api/v1/channels](http://localhost:8080/api/v1/channels) to get an response from the channel REST endpoint.
 
 TODO: image ui - without service implementation
-
-
 
 
 ## Task 2 - Create REST resource for channels and messages
