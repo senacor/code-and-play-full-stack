@@ -50,4 +50,18 @@ public class ChatMessageRepositoryIT {
         assertEquals(asList(messageOne, messageTwo), result);
     }
 
+    @Test
+    public void testFindByChannelIdOrderByCreationTimestampAsc() {
+        assertTrue(repository.findAll().isEmpty());
+        repository.save(new ChatMessage("general", "sender@test.de", "let's"));
+        repository.save(new ChatMessage("dev", "sender@test.de", "Hello"));
+        repository.save(new ChatMessage("general", "sender@test.de", "test"));
+        repository.save(new ChatMessage("dev", "sender@test.de", "World!"));
+        repository.save(new ChatMessage("general", "sender@test.de", "mongo"));
+
+        List<ChatMessage> messages = repository.findByChannelIdOrderByCreationTimestampAsc("general");
+
+        assertEquals(3, messages.size());
+    }
+
 }
