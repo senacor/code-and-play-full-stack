@@ -29,4 +29,11 @@ public class ChatMessageService {
         }
         return messageRepository.findByChannelIdOrderByCreationTimestampAsc(channelId);
     }
+
+    public ChatMessage saveChatMessage(String channelId, String sender, String message) {
+        if (!channelService.existsChannel(channelId)) {
+            throw new ChannelNotFoundException();
+        }
+        return messageRepository.save(new ChatMessage(channelId, sender, message));
+    }
 }
