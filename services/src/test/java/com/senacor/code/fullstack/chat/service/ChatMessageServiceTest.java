@@ -1,8 +1,10 @@
 package com.senacor.code.fullstack.chat.service;
 
 import com.senacor.code.fullstack.chat.domain.ChatMessage;
+import com.senacor.code.fullstack.chat.repository.ChatMessageRepository;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -13,11 +15,17 @@ public class ChatMessageServiceTest {
 
     private ChannelService channelServiceMock = mock(ChannelService.class);
 
-    private ChatMessageService service = new ChatMessageService(channelServiceMock);
+    private ChatMessageRepository messageRepositoryMock = mock(ChatMessageRepository.class);
+
+    private ChatMessageService service = new ChatMessageService(channelServiceMock, messageRepositoryMock);
 
     @Test
     public void fetchChatMessages() throws ChannelNotFoundException {
         when(channelServiceMock.existsChannel("dev")).thenReturn(true);
+        List<ChatMessage> expectedList = Arrays.asList(
+                new ChatMessage("dev", "s@t.de", "Hello"),
+                new ChatMessage("dev", "s@t.de", "World!"));
+        when(messageRepositoryMock.findByChannelIdOrderByCreationTimestampAsc("dev")).thenReturn(expectedList);
 
         List<ChatMessage> result = service.loadChatMessages("dev");
 
