@@ -94,7 +94,7 @@ Create the new test similar to `ChannelControllerIT`.
 You need JsonPath to do assertions about the returned JSON.
     - https://github.com/json-path/JsonPath
 	
-### 2.4 BONUS: Check if the requested channel exists
+### 2.4 Check if the requested channel exists
  - Check if the requested channel exists.
  - In case it does not exists - return a 404.
  
@@ -126,7 +126,7 @@ Add a new method to the `ChatMessageRepository` interface to load messages by ch
 
 You don't need to implement this method - Spring data will handle the execution for you - check documentation for findBy... 
     
-Add a test cass in repositories integration test `ChatMessageRepositoryIT` to check if the new method works.
+Add a test class in repositories integration test `ChatMessageRepositoryIT` to check if the new method works.
 
 ### 3.3 Use the repository in the message service
 Use the `ChatMessageRepository` in the `ChatMessageService` instead of returning static data.
@@ -145,7 +145,7 @@ Extend the `ChatMessageService` with a create method that should take three Stri
 
 Use the `ChatMessageRepository` to save the message into the database.
 
-BONUS: As in the load method throw also a "ChannelNotFoundException" if the channel does not exist.
+As in the load method throw also a "ChannelNotFoundException" if the channel does not exist.
 
 ### 4.2 A POST endpoint to save new chat message
 Allow POST for the resource `/api/v1/channels/{channel}/messages`.
@@ -156,7 +156,20 @@ Hint: Use the UriComponentsBuilder to build the location URI returned by this en
  
 ## Task 5 - Validation 
 
-### 5.1 Bean validation
-Use bean validation the validate messages before they are stored into database.
+### Theory 
+ - [Spring Boot REST – request validation](https://lmonkiewicz.com/programming/get-noticed-2017/spring-boot-rest-request-validation/)
+ 
+### 5.1 Request validation
+Use bean validation to validate messages when they are posted to the REST endpoint.
+
+Implement the following validations:
+ - Channel is required
+ - Message must not be empty and max length of 140
+ - Sender must not be empty
+
+### 5.2 Validate the email address
+
+
+
 
 
