@@ -158,18 +158,16 @@ Hint: Use the UriComponentsBuilder to build the location URI returned by this en
 
 ### Theory 
  - [Spring Boot REST – request validation](https://lmonkiewicz.com/programming/get-noticed-2017/spring-boot-rest-request-validation/)
- 
+ - [curl examples](https://gist.github.com/subfuzion/08c5d85437d5d4f00e58)
+  
 ### 5.1 Request validation
 Use bean validation to validate messages when they are posted to the REST endpoint.
 
 Implement the following validations:
- - Channel is required
- - Message must not be empty and max length of 140
- - Sender must not be empty
+ - Message is required and must have a max length of 140
+ - Sender is required and must be a valid email address
 
-### 5.2 Validate the email address
+You can call your API with any REST client or just use curl:
 
-
-
-
+    curl -X POST http://localhost:8080/api/v1/channels/dev/messages -d '{"key1":"value1", "key2":"value2"}' -H "Content-Type: application/json"
 
