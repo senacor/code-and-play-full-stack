@@ -171,3 +171,14 @@ You can call your API with any REST client or just use curl:
 
     curl -X POST http://localhost:8080/api/v1/channels/dev/messages -d '{"key1":"value1", "key2":"value2"}' -H "Content-Type: application/json"
 
+## Task 6 - Spring Boot Endpoints 
+
+### Theory
+ - [Spring Boot Endpoints](https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/html/production-ready-endpoints.html)
+ - [Appendix A. Common application properties](https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/html/common-application-properties.html)
+
+### Task 6.1
+ - Enable info and health endpoint
+ 
+### Task 6.2 
+ - Enable other endpoints, e.g. mappings
