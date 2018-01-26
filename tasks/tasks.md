@@ -180,5 +180,12 @@ You can call your API with any REST client or just use curl:
 ### Task 6.1
  - Enable info and health endpoint
  
+To enable Spring actuator support add the following dependency:
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+ 
 ### Task 6.2 
  - Enable other endpoints, e.g. mappings
