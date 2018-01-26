@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class ChatMessageController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> newChatMessages(@PathVariable("channel") String channel, @RequestBody ChatMessage chatMessage) {
+    public ResponseEntity<Void> newChatMessages(@PathVariable(value = "channel") String channel, @Valid @RequestBody ChatMessage chatMessage) {
         ChatMessage newChatMessage = messageService.saveChatMessage(channel, chatMessage.getSender(), chatMessage.getMessage());
 
         UriComponents location = UriComponentsBuilder.newInstance().path(CHAT_MESSAGES_PATH)

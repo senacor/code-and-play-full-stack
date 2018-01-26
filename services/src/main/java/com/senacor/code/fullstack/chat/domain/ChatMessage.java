@@ -1,5 +1,9 @@
 package com.senacor.code.fullstack.chat.domain;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -12,8 +16,12 @@ public class ChatMessage {
 
     private String channelId;
 
+    @NotNull
+    @Email
     private String sender;
 
+    @NotNull
+    @Length(min = 3, max = 140)
     private String message;
 
     private Instant creationTimestamp;
