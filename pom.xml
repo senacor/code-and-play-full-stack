@@ -11,7 +11,7 @@
     <name>Chat App Aggregator</name>
 
 	<modules>
-	  <module>frontend</module>
+	  <!--<module>frontend</module>-->
 	  <module>services</module>
 	</modules>
 	
