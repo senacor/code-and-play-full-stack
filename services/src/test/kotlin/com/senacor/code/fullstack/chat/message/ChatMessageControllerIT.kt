@@ -37,4 +37,12 @@ class ChatMessageControllerIT {
             .andExpect(jsonPath("$[0].message").value("Hello"))
             .andExpect(jsonPath("$[1].message").value("World!"))
     }
+
+    @Test
+    fun loadMessagesForNotExistingChannel() {
+        val channel = "not-a-channel"
+        mockMvc.perform(get("/api/v1/{channel}/messages", channel)
+                .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isNotFound)
+    }
 }
