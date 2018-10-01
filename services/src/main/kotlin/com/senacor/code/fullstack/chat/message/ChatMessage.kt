@@ -7,4 +7,7 @@ data class ChatMessage(
     val sender: String,
     val message: String,
     val creationTimestamp: Instant = Instant.now()
+
+
+// import org.springframework.data.annotation.Id
 )
