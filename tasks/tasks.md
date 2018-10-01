@@ -4,7 +4,18 @@
 
 ## Task 1 - Clone, build and run the application
 
-### 1.1 - Clone from github
+### 1.1 Clone / IDE Setup
+You can use any IDE you like, e.g. [InteliJ IDEA](https://www.jetbrains.com/idea/download)
+
+#### Automated setup with IDEA
+Select: New / Project form Version Control / Git
+
+And use the github url: https://github.com/senacor/code-and-play-full-stack/
+
+- Ensure IDEA imported the maven project. If not trigger Reimport.
+- Setup project JDK (Java 8)
+
+#### Manual setup 
 Clone or download the repository 'code-and-play-full-stack' from [github.com/senacor](https://github.com/senacor).
 
     # Use ssh
@@ -13,25 +24,24 @@ Clone or download the repository 'code-and-play-full-stack' from [github.com/sen
     # or http
     git clone https://github.com/senacor/code-and-play-full-stack.git
      
-Checkout branch 'code-camp'.
- 
-    git checkout code-camp
+You are on branch 'master'. 
+
+Import/open the project in your IDE.
+ - For IDEA: `File / Open` and select the `pom.xml` in the root of the git repository.
+ - For Eclipse: `File / Import`, choose `Existing Maven Project` and select the root folder of the git repository.
+
+For Eclipse users: Make sure you installed the [Kotlin Plugin](http://marketplace.eclipse.org/content/kotlin-plugin-eclipse)
 
 ### 1.2 - Build and run it
-Build the application with maven.
+Build the application with Maven (run Maven install).
 
     cd services
     mvn clean install
 
-### 1.3 - Use your IDE
-Open the project in your IDE.
- - For IDEA: `File / Open` and select the `pom.xml` in the root of the git repository.
- - For Eclipse: `File / Import`, choose `Existing Maven Project` and select the root folder of the git repository.
-
 Run the application directly in your IDE.
- - Run the class `ChatApplication`.
+ - Run the `main` method of class `ChatApplication`.
 
-You should see now the following log enties:
+You should see now the following log entries:
     
     Tomcat started on port(s): 8080 (http) with context path ''
     Started ChatApplication in 3.913 seconds (JVM running for 4.447)
@@ -46,17 +56,33 @@ Open [http://localhost:8080/](http://localhost:8080/) to see the frontend.
 ![Initial UI](https://raw.githubusercontent.com/senacor/code-and-play-full-stack/code-camp/tasks/img/initial-ui.png)
 
 
+### 1.3 Start a branch and check CI
+Create your own feature branch named `feature/code-camp-<your-name>`
 
+    git checkout -b feature/code-camp-<your-name>
+    
+Commit and push a small change, e.g. just a newline to this readme, to trigger the CI pipeline. 
+Can you find your build at [https://travis-ci.org/senacor/code-and-play-full-stack/builds](https://travis-ci.org/senacor/code-and-play-full-stack/builds).
+ 
+    git add .
+    git commit -m "My first change"
+    git push origin feature/code-camp-<your-name>
+    
+This is just a hint. Using you IDEs GIT integration is off cause a good idea.
+ 
+ 
+ 
 ## Task 2 - REST API to read messages 
 
 ### Theory
  - Define a Spring bean
-    - Spring Boot enables component scann and looks e.g. for @Component, @Service, @RestController
+    - Spring Boot enables component scan and looks e.g. for @Component, @Service, @RestController
  - Dependency Injection
     - User constructor injection
  - Use Mockito to mock dependencies
     - check out the following methods: Mockito.mock, Mockito.when and Mockito.verify 
- - Use IDE code generation feature for getter, setter, equals, hashCode, toString
+ - Kotlin
+    - Use [data classes](https://kotlinlang.org/docs/reference/data-classes.html) for domain objects. 
  
 ### 2.1 Messages Service
 Create the domain class `ChatMessage` to represent a message with the following properties:
