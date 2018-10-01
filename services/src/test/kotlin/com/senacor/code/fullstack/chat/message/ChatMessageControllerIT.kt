@@ -28,14 +28,24 @@ class ChatMessageControllerIT {
     }
 
     @Test
-    fun loadMessages() {
-        val channelId = "dev"
+    fun loadMessages_channelGeneral() {
+        val channelId = "general"
 
         mockMvc.perform(get("/api/channels/{channelId}/messages", channelId).accept(MediaType.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andExpect(jsonPath("$[0].message").value("Hello"))
             .andExpect(jsonPath("$[1].message").value("World!"))
+    }
+
+    @Test
+    fun loadMessages_channelDev() {
+        val channelId = "dev"
+
+        mockMvc.perform(get("/api/channels/{channelId}/messages", channelId).accept(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$[0].message").value("Have fun!"))
     }
 
     @Test
