@@ -45,4 +45,19 @@ class ChatMessageRepositoryIT {
         assertEquals(listOf(messageOne, messageTwo), result)
     }
 
+    @Test
+    fun testFindByChannelIdOrderByCreationTimestampAsc() {
+        assertTrue(repository.findAll().isEmpty())
+        repository.save(ChatMessage("general", "sender@test.de", "let's"))
+        repository.save(ChatMessage("dev", "sender@test.de", "Hello"))
+        repository.save(ChatMessage("general", "sender@test.de", "test"))
+        repository.save(ChatMessage("dev", "sender@test.de", "World!"))
+        repository.save(ChatMessage("general", "sender@test.de", "mongo"))
+
+        val messages = repository.findByChannelIdOrderByCreationTimestampAsc("general")
+
+        assertEquals(3, messages.size.toLong())
+    }
+
+
 }
