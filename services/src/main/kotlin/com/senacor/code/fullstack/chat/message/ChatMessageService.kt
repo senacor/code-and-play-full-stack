@@ -15,4 +15,11 @@ class ChatMessageService(
         }
         return chatMessageRepository.findByChannelIdOrderByCreationTimestampAsc(channelId)
     }
+
+    fun saveChatMessage(channelId: String, sender: String, message: String): ChatMessage {
+        if (!channelService.existsChannel(channelId)) {
+            throw ChannelNotFoundException()
+        }
+        return chatMessageRepository.save(ChatMessage(channelId, sender, message))
+    }
 }
