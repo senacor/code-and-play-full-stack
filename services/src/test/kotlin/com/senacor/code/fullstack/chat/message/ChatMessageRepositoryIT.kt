@@ -54,7 +54,7 @@ class ChatMessageRepositoryIT {
         repository.save(ChatMessage("dev", "sender@test.de", "World!"))
         repository.save(ChatMessage("general", "sender@test.de", "mongo"))
 
-        val messages = repository.findByChannelIdOrderByCreationTimestampAsc("general")
+        val messages = repository.findByChannelIdOrderByCreationTimestampDesc("general")
 
         assertEquals(3, messages.size.toLong())
     }

@@ -5,6 +5,7 @@ import org.junit.Assert.assertEquals
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.time.Duration
@@ -24,7 +25,7 @@ class ChatMessageServiceTest {
             ChatMessage("dev", "s@t.de", "World!")
         )
 
-        every { chatMessageRepository.findByChannelIdOrderByCreationTimestampAsc("dev") } returns expectedList
+        every { chatMessageRepository.findByChannelIdOrderByCreationTimestampDesc("dev") } returns expectedList
 
         val result = service.loadChatMessages("dev")
 
