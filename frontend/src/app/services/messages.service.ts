@@ -11,11 +11,11 @@ export class MessagesService {
   }
 
   fetchMessages(channel: Channel): Promise<ChatMessage[]> {
-    return this.http.get(`/api/v1/${channel.name}/messages`).map(data => data as ChatMessage[]).toPromise();
+    return this.http.get(`/api/${channel.name}/messages`).map(data => data as ChatMessage[]).toPromise();
   }
 
   sendMessage(channel: Channel, message: ChatMessage): void {
-    this.http.post(`/api/v1/${channel.name}/messages`, message).toPromise();
+    this.http.post(`/api/${channel.name}/messages`, message).toPromise();
   }
 
 }

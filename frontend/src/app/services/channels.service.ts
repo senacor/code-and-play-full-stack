@@ -9,7 +9,7 @@ export class ChannelsService {
   constructor(private http: HttpClient) { }
 
   fetchChannels(): Promise<Channel[]> {
-    return this.http.get('/api/v1/channels').map(data => data as Channel[]).toPromise();
+    return this.http.get('/api/channels').map(data => data as Channel[]).toPromise();
   }
 
 }
