@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy proxy.conf.js",
-    "build": "ng build --prod",
+    "build": "ng build --prod  --preserve-symlinks",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -21,11 +21,14 @@
     "@angular/platform-browser": "^5.0.0",
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
+    "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "jquery": "^3.2.1",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
+    "@angular-devkit/core": "^0.8.2",
     "@angular/cli": "1.6.2",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",

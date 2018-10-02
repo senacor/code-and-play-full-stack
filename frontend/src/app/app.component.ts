@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {User} from "./shared/user.model";
+import {Channel} from "./shared/channel.model";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+
+  user: User = new User('Chatter', 'sender@test.de');
+  currentChannel: Channel = null;
+
+  onChannelSelected(channel: Channel) {
+    this.currentChannel = channel;
+  }
 }

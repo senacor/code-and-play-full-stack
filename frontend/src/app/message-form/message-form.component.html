@@ -1,0 +1,11 @@
+<div class="row message-form">
+  <form (ngSubmit)="onSubmit()"  #msgForm="ngForm">
+    <div class="col-md-11">
+      <label class="sr-only" for="message">Message</label>
+      <input type="text" class="form-control" id="message" [(ngModel)]="message" name="message" placeholder="Message" required />
+    </div>
+    <div class="col-md-1 hidden-sm hidden-xs text-right">
+      <button type="submit" class="btn btn-primary" [disabled]="!msgForm.form.valid">Send</button>
+    </div>
+  </form>
+</div>
