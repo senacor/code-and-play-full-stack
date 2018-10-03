@@ -87,12 +87,12 @@ This is just a hint. Using you IDEs GIT integration is off cause a good idea.
     - Spring Boot enables component scan and looks e.g. for @Component, @Service, @RestController
  - Dependency Injection
     - User constructor injection
- - Use Mockito to mock dependencies
+ - Use [MockK](https://mockk.io/) to mock dependencies
     - check out the following methods: Mockito.mock, Mockito.when and Mockito.verify 
  - Kotlin tips:
     - Use [data classes](https://kotlinlang.org/docs/reference/data-classes.html) for domain objects.
     - Use val (not var) - because we like final variables.
-    - Make use of default values. 
+    - Make use of default values for constructor and method parameter. 
  
 ### 2.1 Messages Service
 Create a data class `ChatMessage` to represent the domain object of a chat message. We need the following properties:
@@ -119,12 +119,12 @@ As bonus try out [kotlin.collections](https://kotlinlang.org/api/latest/jvm/stdl
 
 ### 2.2 Create REST endpoints
   - Create a REST endpoint for the message resources.
-    - `/api/v1/channels/{channel}/messages`
+    - `/api/channels/{channelId}/messages`
  - Implement the REST endpoint in a new class called `ChatMessageController`.
  - For now we only support GET.
  - Use the messages services to fetch the messages of an channel.
 
-When you open the frontend now, you should see the first two messages.
+When you open the frontend now, you should see messages loaded via the REST API.
 
 ### 2.3 Integration test the REST endpoints	
 Create an integration test for the class `ChatMessageController` with Spring mock mvc.
