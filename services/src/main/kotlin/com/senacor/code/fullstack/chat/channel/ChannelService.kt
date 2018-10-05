@@ -3,7 +3,7 @@ package com.senacor.code.fullstack.chat.channel
 import org.springframework.stereotype.Service
 
 @Service
-class ChannelService(private var channelRepository: ChannelRepository) {
+class ChannelService(private val channelRepository: ChannelRepository) {
 
     fun loadChannels(): List<Channel> = channelRepository.findAll()
 

@@ -87,8 +87,7 @@ This is just a hint. Using you IDEs GIT integration is off cause a good idea.
     - Spring Boot enables component scan and looks e.g. for @Component, @Service, @RestController
  - Dependency Injection
     - User constructor injection
- - Use [MockK](https://mockk.io/) to mock dependencies
-    - check out the following methods: Mockito.mock, Mockito.when and Mockito.verify 
+ - Use [MockK](https://mockk.io/) to mock dependencies, e.g. use `mockk`, `every` and `verify`
  - Kotlin tips:
     - Use [data classes](https://kotlinlang.org/docs/reference/data-classes.html) for domain objects.
     - Use val (not var) - because we like final variables.
@@ -131,8 +130,7 @@ Create an integration test for the class `ChatMessageController` with Spring moc
  
 Create the new test similar to `ChannelControllerIT`.
     
-You need JsonPath to do assertions about the returned JSON.
-    - https://github.com/json-path/JsonPath
+You need [JsonPath](https://github.com/json-path/JsonPath) to do assertions about the returned JSON.
 	
 ### 2.4 Check if the requested channel exists
  - Check if the requested channel exists.
@@ -155,9 +153,9 @@ Don't forget to update the unit and integration test.
 
 ### 3.1 Spring Data Repository for ChatMessages
 To store instances of `ChatMessage` into the Mongo DB create a repository.
- - Create a ChatMessageRepository
- - Save some ChatMessages for the channels "general" and "dev" on application startup (See class `InitDatabaseOnStartupRunner`).
- - And write a simple test for the repository that saves and loads some ChatMessages.
+ - Create a `ChatMessageRepository`
+ - Save some chat messages for the channels "general" and "dev" on application startup (See class `InitDatabaseOnStartupRunner`).
+ - And write a simple test for the repository that saves and loads some chat messages.
 
 ### 3.2 Read messages from the database
 The default Spring data repository provides a `findAll` method. But our application likes to request messages of a specific channel.
@@ -188,9 +186,9 @@ Use the `ChatMessageRepository` to save the message into the database.
 As in the load method throw also a "ChannelNotFoundException" if the channel does not exist.
 
 ### 4.2 A POST endpoint to save new chat message
-Allow POST for the resource `/api/v1/channels/{channel}/messages`.
+Allow POST for the resource `/api/channels/{channelId}/messages`.
 
-Hint: Use the UriComponentsBuilder to build the location URI returned by this endpoint.
+Hint: Use the `UriComponentsBuilder` to build the location URI returned by this endpoint.
  
  
  
@@ -209,7 +207,7 @@ Implement the following validations:
 
 You can call your API with any REST client or just use curl:
 
-    curl -X POST http://localhost:8080/api/v1/channels/dev/messages -d '{"key1":"value1", "key2":"value2"}' -H "Content-Type: application/json"
+    curl -X POST http://localhost:8080/api/channels/dev/messages -d '{"key1":"value1", "key2":"value2"}' -H "Content-Type: application/json"
 
 ## Task 6 - Spring Boot Endpoints 
 
