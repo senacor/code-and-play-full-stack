@@ -15,4 +15,14 @@ class ChatMessageService(private val channelService: ChannelService, private val
         }
     }
 
+    fun createMessage(channelId: String, sender: String, message: String): ChatMessage {
+        if (channelService.existsChannel(channelId)) {
+            val msg = ChatMessage(channelId, sender, message)
+            chatMessageRepository.save(msg)
+            return msg
+        } else {
+            throw ChannelNotFoundException()
+        }
+    }
+
 }

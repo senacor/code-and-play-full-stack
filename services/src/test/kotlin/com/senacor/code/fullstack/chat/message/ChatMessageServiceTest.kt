@@ -54,4 +54,26 @@ class ChatMessageServiceTest {
         chatMessageService.loadMessages("not-a-channel")
     }
 
+    @Test
+    fun createMessage() {
+        every { repository.existsById("dev") } returns true
+        every { chatMessageRepository.save(any<ChatMessage>()) } answers { this.value }
+
+        val channelId: String = "dev"
+        val sender: String = "tcuje@freenet.de"
+        val message: String = "This is it!"
+        val result = chatMessageService.createMessage(channelId, sender, message)
+
+        assertEquals(channelId, result.channelId)
+        assertEquals(sender, result.sender)
+        assertEquals(message, result.message)
+    }
+
+    @Test(expected = ChannelNotFoundException::class)
+    fun createMessageWithNotExistingChannel() {
+        every { repository.existsById("not-a-channel") } returns false
+
+        chatMessageService.createMessage("not-a-channel", "tcuje@freenet.de", "This is it!")
+    }
+
 }
