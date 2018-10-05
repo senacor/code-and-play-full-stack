@@ -13,6 +13,7 @@ open class ChatApplication {
         FilterRegistrationBean(filter)
 }
 
+// This is the main function
 fun main(args: Array<String>) {
     runApplication<ChatApplication>(*args)
 }
