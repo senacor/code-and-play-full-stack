@@ -15,7 +15,7 @@ Frontend and services can be build together by executing a maven install in the 
 	
 To run it together just start the service jar file in services/target
 
-	java -jar services/target/chat-app-services-X.Y.Z-SNAPSHOT.jar
+	java -jar services/target/chat-app-services-0.0.1-SNAPSHOT.jar
 
 ## Development
 
