@@ -29,7 +29,7 @@ class ChatMessageControllerIT {
 
     @Test
     fun loadMessages() {
-        mockMvc.perform(get("/api/channels/dev/message").accept(MediaType.APPLICATION_JSON_UTF8))
+        mockMvc.perform(get("/api/channels/dev/messages").accept(MediaType.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andExpect(jsonPath("$[0].channelId").value("dev"))
@@ -38,7 +38,7 @@ class ChatMessageControllerIT {
 
     @Test
     fun loadMessagesChannelNotExists() {
-        mockMvc.perform(get("/api/channels/not-a-channel/message").accept(MediaType.APPLICATION_JSON_UTF8))
+        mockMvc.perform(get("/api/channels/not-a-channel/messages").accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound)
     }
 

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/channels/{channelId}/message")
+@RequestMapping("/api/channels/{channelId}/messages")
 class ChatMessageController(private val messageService: ChatMessageService) {
 
     @GetMapping
