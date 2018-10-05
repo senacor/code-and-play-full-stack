@@ -5,12 +5,14 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 @IntegrationTest
@@ -40,6 +42,16 @@ class ChatMessageControllerIT {
     fun loadMessagesChannelNotExists() {
         mockMvc.perform(get("/api/channels/not-a-channel/messages").accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound)
+    }
+
+    @Test
+    fun createMessage() {
+        mockMvc.perform(post("/api/channels/dev/messages")
+                .param("sender", "tcuje@freenet.de")
+                .param("message", "Kotlin is awesome!")
+                .accept(MediaType.ALL))
+                .andExpect(status().isCreated)
+                .andExpect(header().exists(HttpHeaders.LOCATION))
     }
 
 }

@@ -59,9 +59,9 @@ class ChatMessageServiceTest {
         every { repository.existsById("dev") } returns true
         every { chatMessageRepository.save(any<ChatMessage>()) } answers { this.value }
 
-        val channelId: String = "dev"
-        val sender: String = "tcuje@freenet.de"
-        val message: String = "This is it!"
+        val channelId = "dev"
+        val sender = "tcuje@freenet.de"
+        val message = "This is it!"
         val result = chatMessageService.createMessage(channelId, sender, message)
 
         assertEquals(channelId, result.channelId)
