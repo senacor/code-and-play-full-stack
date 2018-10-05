@@ -32,4 +32,18 @@ class ChatMessageRepositoryIT {
 
         assertEquals(expectedMessages, fetchedMessages)
     }
+
+    @Test
+    fun testFindByChannelIdOrderByCreationTimestamp() {
+        val expectedMessages = listOf(
+                ChatMessage("test", "tcuje@freenet.de", "Hello World"),
+                ChatMessage("test", "tcuje@freenet.de", "This is not a test!")
+        )
+        chatMessageRepository.saveAll(expectedMessages)
+
+        val fetchedMessages = chatMessageRepository.findByChannelIdOrderByCreationTimestamp("test")
+
+        assertEquals(expectedMessages, fetchedMessages)
+    }
+
 }
